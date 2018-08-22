@@ -1,0 +1,28 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title></ion-title>
+    </ion-navbar>
+</ion-header>
+  
+<ion-content padding class="upload-content">
+    <img [src]="base64Image">
+    <button ion-button color="pink" full (click)="openCamera()">Open Camera</button>
+    <button ion-button color="pink" full (click)="openGallery()">Open Gellary</button>
+    <ion-list>
+        <ion-item>
+            <ion-label floating>Title</ion-label>
+            <ion-input type="text"  [(ngModel)]="title" ></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Review</ion-label>
+            <ion-textarea style="height:auto;" type="text"  [(ngModel)]="review"></ion-textarea>
+        </ion-item>
+    </ion-list>
+</ion-content>
+
+<ion-footer no-shadow>
+	<ion-toolbar position="bottom">
+		<button ion-button color="pink" full (click)="_uploadImage()">Upload Image</button>
+	</ion-toolbar>
+</ion-footer>
+  

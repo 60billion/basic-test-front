@@ -1,3 +1,16 @@
+ion-header{
+    ion-navbar{
+        .toolbar-background {
+            background-image: url('../../assets/img/titleLogoWhite.png');
+            width: 100%;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+    }
+}
 page-home {
-
+    .mainProfile h5{
+        font-weight:bold;
+     }
 }

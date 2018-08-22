@@ -1,17 +1,89 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Home</ion-title>
+    <ion-title></ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+<ion-content class="main">
+    <!--리프래시 기능(상단) 새로나온 내용 상단에 추가-->
+    <ion-refresher (ionRefresh)="doRefresh($event)" (ionPull)="doPulling($event)">
+      <ion-refresher-content
+        pullingText="Pull to refresh..."
+        refreshingText="Refreshing...">
+      </ion-refresher-content>
+    </ion-refresher>
+    
+
+    <ion-card class="mainProCard" *ngFor="let item of reviews">
+        
+        <ion-item class="mainProfile">
+          <ion-avatar item-start>
+            <!-- 이미지 적용위치 -->
+            <img src={{item.location}}> 
+          </ion-avatar>
+          <h5>지환이맘</h5>
+        </ion-item>
+          <!-- 이미지 적용위치 -->
+          <!-- <img class="mainImg" src="assets/img/rel1.jpg" (click)="intoSalePage()">       -->
+          <img class="mainImg" src={{item.location}}>   
+
+        
+        <ion-row>
+          <ion-col >
+            <button  ion-button color="pink" clear small icon-start (click)="wantitClick()">
+              <ion-icon name='thumbs-up'></ion-icon>
+              <!-- 보여주기용도-->
+              {{wantit}} want!
+            </button>
+          </ion-col>
+          <ion-col >
+            <button  ion-button color="pink" clear small icon-start>
+              <ion-icon name='text'></ion-icon>
+              25 comments
+            </button>
+          </ion-col >
+          <ion-col align-self-center text-center>
+            <ion-note >
+              11h ago
+            </ion-note>
+          </ion-col>
+        </ion-row>
+        
+        <ion-card-content>
+            <!-- 추후 내용부분 줄이는 함수 만들어야함.-->
+            <!-- <p>{{makeContentsShortInMain()}}</p> -->
+            <!-- 제목적용위치 -->
+            <p style="font-weight: bold;">{{item.title}}</p>
+            <!-- 내용적용위치 -->
+            <p>{{item.review}}</p>
+          </ion-card-content>
+
+          <ion-list >
+            <ion-item>
+                <ion-icon ios="ios-thumbs-up" md="md-thumbs-up" item-start color="pink"> Want!</ion-icon>
+                <ion-note item-end>
+                Let us know How you guys want it.
+                When the gage up, this posting probably will be product for you guys!
+                </ion-note>
+            </ion-item>
+            <!-- 프로그래스바 npm 설치 필요: npm install angular-progress-bar@latest save -->
+            <!-- {{wantitString}} 보여주기용도-->
+            <progress-bar progress={{wantitString}} [color-degraded]="{'0': '#fbd6e0',  '50': '#f9c3d3', '80': '#fd8c8e'}"></progress-bar>  
+        </ion-list>
+        
+      </ion-card>
+
+
+    <!--리프래시 기능(하단) 나오지 않은 과거내용 하단 추가-->
+    <!-- <ion-refresher (ionRefresh)="doRefresh($event)" (ionPull)="doPulling($event)">
+      <ion-refresher-content
+        pullingText="Pull to refresh..."
+        refreshingText="Refreshing...">
+      </ion-refresher-content>
+    </ion-refresher> -->
+
+
+  <ion-fab right bottom>
+    <button ion-fab color="light" (click)="goToUploadPage()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
 </ion-content>

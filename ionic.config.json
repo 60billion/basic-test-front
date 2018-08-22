@@ -1,5 +1,7 @@
 {
   "name": "basic-test",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "ionic-angular"
 }

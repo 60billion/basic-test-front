@@ -1,0 +1,25 @@
+<ion-header  no-border>
+    <ion-navbar>
+      <ion-title>
+        
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding >
+      <img src="../../assets/img/login_logo.png"  style="margin-top:40px; margin-bottom:30px;" alt="">
+    <ion-list class="login">
+        <ion-item>
+            <ion-label floating color="light">Username</ion-label>
+            <ion-input type="email"  [(ngModel)]="username"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating color="light">Password</ion-label>
+            <ion-input  type="password" [(ngModel)]="password"></ion-input>
+        </ion-item>
+    </ion-list>
+    
+    <button ion-button full outline color="light" (click)="goToMain()">login</button>
+    <button ion-button full outline color="light" (click)="goToSignin()">sign in</button>
+  </ion-content>
+  

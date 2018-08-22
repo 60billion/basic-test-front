@@ -1,0 +1,26 @@
+page-login{
+    ion-content{
+        background-image: url(../../assets/img/login.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+        overflow: hidden;
+       
+    }
+
+    ion-header{
+        ion-navbar{
+            .toolbar-background {
+                background-image: url(../../assets/img/login_header.png);
+                width: 100%;
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+                background-position: center center;
+            }
+        }
+    }
+    .login > ion-item{
+        padding:0;
+        background-color: transparent;
+    }
+    
+}
