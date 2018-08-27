@@ -5,6 +5,7 @@ import { Signin } from './signin/signin';
 import { Http } from '@angular/http';
 import { Url } from '../url/url';
 import { map } from 'rxjs/operators';
+import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage';
 
 
 
@@ -20,7 +21,8 @@ export class Login {
   constructor(public navCtrl: NavController,
               private http : Http,
               private url : Url,
-              private alert: AlertController) {
+              private alert: AlertController,
+              private secureStorage: SecureStorage) {
               
   }
 
@@ -42,7 +44,11 @@ export class Login {
       map(res=>res.json())
     ).subscribe(response=>{
      if(response.result === "success"){
-        this.navCtrl.push(TabsPage);
+       this.secureStorage.create("tokenStorage")
+       .then((storage:SecureStorageObject)=>{
+         storage.set('token',response.token)
+       })
+       this.navCtrl.push(TabsPage);
      }else if(response.result === "passwordErr"){
         let alert = this.alert.create({
           title: '로그인 실패',

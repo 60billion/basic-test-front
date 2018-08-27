@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { NavController, Refresher, AlertController } from 'ionic-angular';
 import { Upload } from './upload/upload';
+import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage';
 
 import { Http } from '@angular/http';
 import { map } from 'rxjs/operators'
 import { Url } from '../url/url';
+import { Login } from '../login/login';
 
 @Component({
   selector: 'page-home',
@@ -17,7 +19,7 @@ export class HomePage {
   reviews;
   
 
-  constructor(public navCtrl: NavController, public http : Http, private url:Url, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public http : Http, private url:Url, private alertCtrl: AlertController,private secureStorage: SecureStorage) {
   
   }
 
@@ -50,12 +52,23 @@ export class HomePage {
  
   //다시 홈으로 돌아오면 리프래시를 하기 위함이다.
   ionViewDidEnter() {
-    let data ={};
-    this.http.post( this.url.url+'/getall',data).pipe(
-      map(res => res.json())
-    ).subscribe(response => {//getall 대응내용     
-      this.reviews = response.reviews.reverse();
-    })
+    this.secureStorage.create("tokenStorage")
+    .then((storage:SecureStorageObject)=>{
+      storage.get('token').then(token=>{
+        
+        let data={
+          tokens:token
+        }
+        this.http.post(this.url.url+'/getall',data).pipe(map(res=>res.json())).subscribe(response => {
+            if(response.reviews){
+              this.reviews = response.reviews.reverse();
+            }else if(response.login){
+              this.navCtrl.push(Login);
+            }
+        })
+
+      })
+    })  
   }
 
 }

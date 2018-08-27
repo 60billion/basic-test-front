@@ -6,16 +6,9 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-item>
-      <ion-label>이름</ion-label>
-      <input type="text">
-  </ion-item>
-  <ion-item>
-      <ion-label for="">나라</ion-label>
-      <input type="text">
-  </ion-item>
-  
-  <button ion-button full (click)="_print()">출력</button>
-  <p>{{printing}}</p>
+<ion-content padding>  
+  <button ion-button full (click)="_login()">login</button>
+  <button ion-button full (click)="_getToken()">showToken</button>
+  <p>{{token}}</p>
+  <button ion-button full (click)="_checkWorking()">checkWorking</button>
 </ion-content>

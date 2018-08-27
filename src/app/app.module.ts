@@ -13,7 +13,7 @@ import { Profile } from '../pages/profile/profile';
 import { Login } from '../pages/login/login';
         import { Signin } from '../pages/login/signin/signin';
 
-import { HttpModule } from '@angular/http';
+import { HttpModule, RequestOptions } from '@angular/http';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
@@ -21,8 +21,12 @@ import { File } from '@ionic-native/file';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {ProgressBarModule} from "angular-progress-bar"
+import { SecureStorage } from '@ionic-native/secure-storage';
 
 import { Url } from '../pages/url/url';
+import { SetTokenProvider } from '../providers/set-token/set-token';
+import { Testt } from '../pages/about/testt/testt';
+
 
 
 
@@ -30,6 +34,7 @@ import { Url } from '../pages/url/url';
   declarations: [
     MyApp,
     AboutPage,
+      Testt,
     ContactPage,
     HomePage,
       Upload,
@@ -49,6 +54,7 @@ import { Url } from '../pages/url/url';
   entryComponents: [
     MyApp,
     AboutPage,
+      Testt,
     ContactPage,
     HomePage,
       Upload,
@@ -66,7 +72,9 @@ import { Url } from '../pages/url/url';
     File,
     FileTransferObject,
     FileTransfer,
-    Url
+    Url,
+    SecureStorage,
+    SetTokenProvider,
   ]
 })
 export class AppModule {}
