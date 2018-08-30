@@ -10,6 +10,9 @@ import { map } from 'rxjs/operators'
 import { HomePage } from '../home';
 import { Url } from '../../url/url';
 
+import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage';
+import { Login } from '../../login/login';
+
 
 
 @Component({
@@ -21,7 +24,8 @@ export class Upload {
   base64Image="https://www.joomlatools.com/images/developer/ui/placeholder-16-9.png.pagespeed.ce.gT4LjHxoYL.png"
   title:string;
   review:string;
-
+  checkdata;
+  token;
 
   constructor(public navCtrl: NavController,
               private camera: Camera,
@@ -30,7 +34,8 @@ export class Upload {
               private file: File,
               private toastCtrl: ToastController,
               private loadingCtrl:LoadingController,
-              private url:Url) {
+              private url:Url,
+              private secureStorage: SecureStorage) {
 
   }
   //카메라켜서 이미지가지고 오기
@@ -65,34 +70,62 @@ export class Upload {
 
   //업로드 버튼을 눌렀을때
   _uploadImage(){
-    var ran = Math.floor(Math.random() * 10);
-    var name:string = "image"
-    var date =new Date();
-    var fileName = name+ran+date.getTime();
+    this.secureStorage.create("tokenStorage")
+    .then((storage:SecureStorageObject)=>{
+      storage.get('token').then(token =>{//시큐어스토리지로 감싸주었다. 스토어데이터에 토큰을 넣기위해서
+        var ran = Math.floor(Math.random() * 10);
+        var name:string = "image"
+        var date =new Date();
+        var fileName = name+ran+date.getTime();
 
-    //로더화면뿌리기
-    let loader = this.loadingCtrl.create({
-      content: "Uploading..."
-    });
-    loader.present();
+        //로더화면뿌리기
+        let loader = this.loadingCtrl.create({
+          content: "Uploading..."
+        });
+        loader.present();
+        
+        
+            
 
-    //이미지 업로드(S3)
-    const fileTransfer: FileTransferObject = this.transfer.create();
+        //이미지 업로드(S3)
+        const fileTransfer: FileTransferObject = this.transfer.create();
 
-    let options: FileUploadOptions = {
-        fileKey: 'reviewImage',
-        fileName: fileName,
-        chunkedMode: false,
-        mimeType:'multipart/form-data',
-        params:{"title":this.title, "review":this.review}//데이터 업로드(RDS)
-    }
 
-    fileTransfer.upload(this.base64Image ,this.url.url+'/getReview', options)
-    .then((data) => {//이부분이 작동하려면 서버에서 응답을 보내주어야한다.
-      loader.dismiss();
-      this.navCtrl.push(HomePage);//홈페이지로 넘어가면서 리프레시를 적용해야 업로드화면이 바로 메인에 나온다.ionViewDidEnter(){} 이내용을 homt.ts에 추가한다.
-    }, (err) => {
-      loader.dismiss();
+        let options: FileUploadOptions = {
+            fileKey: 'reviewImage',
+            fileName: fileName,
+            chunkedMode: false,
+            mimeType:'multipart/form-data',
+            params:{"title":this.title, "review":this.review, "tokens":token}//데이터 업로드(RDS)
+        }
+
+        fileTransfer.upload(this.base64Image ,this.url.url+'/getReview', options)
+        .then((data) => {//이부분이 작동하려면 서버에서 응답을 보내주어야한다.
+          loader.dismiss();
+          var a = data.response.trim()
+          //아래를 보면 데이터는 객체로 받는데 객체안에 response가 있으며 그안에 객체를 또 집어넣어서 서버응답을하니 문제가 있었다.
+          //그래서 아래와 같이 "{\"session\":\"session\"}" 처럼 문자열로 풀어서 진행하였다. data에 reponse는 객체가아니라 문자열로 서버응답하면좋을거같다.
+          //다만 토큰에 따른 미들웨어 때문에 객체로 응답하고있다. 추후 토큰을 바디값이 아닌 헤더로 바꿀 예정이다.
+
+          if(data.response == "{\"session\":\"session\"}"){
+            this.navCtrl.push(HomePage);
+          }else if(data.response == "{\"login\":\"login\"}"){
+            this.navCtrl.push(Login)
+          }
+
+          //data의 객체 형태가 궁금해서 콘솔해봤지만 나오지 않았었다. 그래서 제이슨을 이용하니 콘솔에서 구체적 내용이 나왔다 앞으로 참고하길
+          console.log("~~~~~~~~~~~~~~~~~~~~  "+JSON.stringify(data));
+          console.dir("~~~~~~~~~~~~~~~~~~~~d  "+JSON.stringify(a));
+          console.dir("~~~~~~~~~~~~~~~~~~~~d0  "+JSON.stringify(data[0]));
+          console.dir("~~~~~~~~~~~~~~~~~~~~d1  "+data[1]);
+          //this.navCtrl.push(HomePage);//홈페이지로 넘어가면서 리프레시를 적용해야 업로드화면이 바로 메인에 나온다.ionViewDidEnter(){} 이내용을 homt.ts에 추가한다.
+          
+        }, (err) => {
+          loader.dismiss();
+          this.checkdata = err
+        })
+        //여기까지 시큐어스토리지로 감싸주었다.
+      })
     })
   }
 
