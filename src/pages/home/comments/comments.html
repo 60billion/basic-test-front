@@ -5,29 +5,25 @@
     </ion-navbar>
 </ion-header>
 <ion-content>
-    <ion-list no-lines >
-      <div *ngFor="let top of comment">
+    <ion-list no-lines>
         <ion-item>
             <ion-avatar item-start>
-                <img src={{top.profileImg}}>
+                <img src="assets/imgs/logo.png">
             </ion-avatar>
-            <h2>{{top.username}}</h2>
-            <ion-note item-end>Reply</ion-note>
-            <p>{{top.comment}}</p>
+            <h2>UserName</h2>
+            <ion-note item-end (click)="writeUnderComment()">Reply</ion-note>
+            <p>Hey...this is my comment.</p>
         </ion-item>
         <ion-list class="innerList" no-lines>
-                <ng-container *ngFor="let under of undercomment">
-                <ion-item  *ngIf="top.usercomment == under.underid">
+                <ion-item>
                     <ion-avatar item-start>
-                        <img src={{under.profileImg}}>
+                        <img src="assets/imgs/logo.png">
                     </ion-avatar>
-                    <h2>{{under.username}}</h2>
-                    <ion-note item-end>Reply</ion-note>
-                    <p>{{under.comment}}</p>
+                    <h2>UserName</h2>
+                    <ion-note item-end (click)="writeInUnderComment()">Reply</ion-note>
+                    <p>Hey...this is my comment.</p>
                 </ion-item>
-              </ng-container>
         </ion-list>
-      </div>
     </ion-list>
 
     <ion-footer>

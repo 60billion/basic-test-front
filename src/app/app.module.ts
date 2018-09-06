@@ -26,7 +26,9 @@ import { SecureStorage } from '@ionic-native/secure-storage';
 import { Url } from '../pages/url/url';
 import { SetTokenProvider } from '../providers/set-token/set-token';
 import { Testt } from '../pages/about/testt/testt';
+import { Comments } from '../pages/home/comments/comments';
 
+import { Keyboard } from '@ionic-native/keyboard';
 
 
 
@@ -38,6 +40,7 @@ import { Testt } from '../pages/about/testt/testt';
     ContactPage,
     HomePage,
       Upload,
+      Comments,
     Alarm,
     Profile,
     TabsPage,
@@ -58,6 +61,7 @@ import { Testt } from '../pages/about/testt/testt';
     ContactPage,
     HomePage,
       Upload,
+      Comments,
     Alarm,
     Profile,
     TabsPage,
@@ -75,6 +79,7 @@ import { Testt } from '../pages/about/testt/testt';
     Url,
     SecureStorage,
     SetTokenProvider,
+    Keyboard
   ]
 })
 export class AppModule {}

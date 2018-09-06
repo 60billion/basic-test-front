@@ -12,7 +12,7 @@ import { Profile } from '../pages/profile/profile';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = Profile;
+  rootPage:any = TabsPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {

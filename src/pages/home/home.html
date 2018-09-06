@@ -29,15 +29,17 @@
 
         
         <ion-row>
-          <ion-col >
-            <button  ion-button color="pink" clear small icon-start (click)="wantitClick()">
-              <ion-icon name='thumbs-up'></ion-icon>
-              <!-- 보여주기용도-->
-              {{wantit}} want!
+          <ion-col>
+
+            <button  ion-button color="pink" clear small icon-start (click)="wantitClick(item.id,item.count)">              
+                <ion-icon name='thumbs-up'></ion-icon>
+                {{item.count}} want!              
             </button>
+
+
           </ion-col>
-          <ion-col >
-            <button  ion-button color="pink" clear small icon-start>
+          <ion-col>
+            <button  ion-button color="pink" clear small icon-start (click)="showComments()">
               <ion-icon name='text'></ion-icon>
               25 comments
             </button>
@@ -68,7 +70,7 @@
             </ion-item>
             <!-- 프로그래스바 npm 설치 필요: npm install angular-progress-bar@latest save -->
             <!-- {{wantitString}} 보여주기용도-->
-            <progress-bar progress={{wantitString}} [color-degraded]="{'0': '#fbd6e0',  '50': '#f9c3d3', '80': '#fd8c8e'}"></progress-bar>  
+            <progress-bar progress={{item.count}} [color-degraded]="{'0': '#fbd6e0',  '50': '#f9c3d3', '80': '#fd8c8e'}"></progress-bar>  
         </ion-list>
         
       </ion-card>

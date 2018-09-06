@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, Refresher, AlertController } from 'ionic-angular';
+import { NavController, Refresher, AlertController,ModalController } from 'ionic-angular';
 import { Upload } from './upload/upload';
 import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage';
 
@@ -7,19 +7,28 @@ import { Http } from '@angular/http';
 import { map } from 'rxjs/operators'
 import { Url } from '../url/url';
 import { Login } from '../login/login';
+import { Comments } from './comments/comments';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-  //wantit 증가 게이지 보이기용도
-  wantit:number = 0;
-  wantitString:string = "0";
+
+  wantitString:string;
+  wantitUp:boolean = false;
   reviews;
+  reviewsPlus:boolean = true;
   
 
-  constructor(public navCtrl: NavController, public http : Http, private url:Url, private alertCtrl: AlertController,private secureStorage: SecureStorage) {
+  
+
+  constructor(public navCtrl: NavController, 
+              public http : Http, 
+              private url:Url, 
+              private alertCtrl: AlertController,
+              private secureStorage: SecureStorage,
+              public modalCtrl: ModalController) {
   
   }
 
@@ -27,16 +36,32 @@ export class HomePage {
     this.navCtrl.push(Upload);
   }
 
-  //wantit 증가 게이지 보여주기 용도
-  wantitClick(){
-    if(this.wantit < 99){
-      this.wantit++;
-      this.wantitString = this.wantit.toString();
-    }else{
-      this.wantit=100;
-      this.wantitString="100"
-    }
-    
+  
+  showComments(){
+    const modal = this.modalCtrl.create(Comments);
+    modal.present();
+  }
+
+  
+
+  wantitClick(id,count){
+    this.secureStorage.create("tokenStorage")
+    .then((storage:SecureStorageObject)=>{
+      storage.get('token').then(token=>{
+        
+        let data={
+          tokens:token,
+          id:id,
+          count:count
+        }
+        this.http.post(this.url.url+'/wantit',data).pipe(map(res=>res.json())).subscribe(response => {
+            if(response.result){
+              this.ionViewDidEnter();
+            }
+        })
+
+      })
+    })  
   }
 
   //리프래시
@@ -62,6 +87,7 @@ export class HomePage {
         this.http.post(this.url.url+'/getall',data).pipe(map(res=>res.json())).subscribe(response => {
             if(response.reviews){
               this.reviews = response.reviews.reverse();
+
             }else if(response.login){
               this.navCtrl.push(Login);
             }

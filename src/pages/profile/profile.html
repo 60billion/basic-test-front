@@ -5,11 +5,11 @@
       </ion-title>
     </ion-navbar>
     <ion-toolbar no-border-top>
-      <ion-segment color="pink" [(ngModel)]="pet">
+      <ion-segment color="pink" [(ngModel)]="profile">
         <ion-segment-button value="myPage">
             <ion-icon name="clipboard"></ion-icon>
         </ion-segment-button>
-        <ion-segment-button value="Wan!t">
+        <ion-segment-button value="Wan!t" (click)="showLikes()">
             <ion-icon name="thumbs-up"></ion-icon>
         </ion-segment-button>
         <ion-segment-button value="Fallowr">
@@ -24,7 +24,7 @@
   
   <ion-content>
   <!-- <button ion-button full (click)="logout()">logout</button> -->
-  <button ion-button full (click)="_button()">test</button>
+  <!-- <button ion-button full (click)="_button()">test</button> -->
   
   
   <div [ngSwitch]="profile">
@@ -48,27 +48,54 @@
               </ion-col>
             </ion-row>
 
-
+            
         </ion-card>
 
         <ion-row class="card-background-pages">
-          <!-- row에 ngfor를 돌려야할거라 생각했는데, ion-col에 col-6 값을 넣고하니깐 된다... -->
-            <ion-col class="relative" col-6 *ngFor="let item of reviews;" > 
-                <ion-card no-padding>
-                    <img src={{item.location}}/>                    
-                    <h2>{{item.title}}</h2>
-                    <p>{{i}}</p>
-                    <progress-bar [progress]="50" [color-degraded]="{'0': '#fbd6e0',  '50': '#f9c3d3', '80': '#fd8c8e'}"></progress-bar>  
+          <!-- row에 ngfor를 돌려야할거라 생각했는데, ion-col에 col-6 값을 넣고하니깐 된다... (row에서 하니 문제가있었다.)
+            다만 col or row or card 중에 페딩 마진 부분이 문제가 있었는데(카드끼리 너무 떨어져있는 현상) 
+            css에 ion-card부분처럼 작성하니 작동하였다. width:100% !important; margin-left: 0 !important;  
+            margin-right: 0 !important; img{ width:100%; } -->
+            <ion-col class="relative" width-50   > 
+                <ion-card *ngFor="let odd of profileOddList;">
+                    <img src={{odd.location}}/>                    
+                    <h2>{{odd.title}}</h2>
+                    <progress-bar progress={{odd.count}} [color-degraded]="{'0': '#fbd6e0',  '1': '#f9c3d3', '3': '#fd8c8e'}"></progress-bar>  
                 </ion-card>        
             </ion-col>
+            <ion-col class="relative" width-50   > 
+              <ion-card *ngFor="let even of profileEvenList;">
+                  <img src={{even.location}}/>                    
+                  <h2>{{even.title}}</h2>
+                  <progress-bar progress={{even.count}} [color-degraded]="{'0': '#fbd6e0',  '1': '#f9c3d3', '3': '#fd8c8e'}"></progress-bar>  
+              </ion-card>        
+          </ion-col>
         </ion-row>
-       
-
-
     </ion-list>
 
+    <ion-list *ngSwitchCase="'Wan!t'">
+        <ion-row class="card-background-pages" >
+          <ion-col class="relative" width-50 >
+              <ion-card *ngFor="let odd of likeOddList;">
+                  <img src={{odd.location}}/>                    
+                  <h2>{{odd.title}}</h2>
+                  <progress-bar progress={{odd.count}} [color-degraded]="{'0': '#fbd6e0',  '1': '#f9c3d3', '3': '#fd8c8e'}"></progress-bar>  
+              </ion-card>            
+          </ion-col>
+          <ion-col class="relative" width-50 >
+              <ion-card *ngFor="let even of likeEvenList;">
+                  <img src={{even.location}}/>
+                  <div class="card-titles">OnSale</div>
+                  <h2>{{even.title}}</h2>
+                  <progress-bar progress={{even.count}} [color-degraded]="{'0': '#fbd6e0',  '1': '#f9c3d3', '3': '#fd8c8e'}"></progress-bar>  
+              </ion-card>
+          </ion-col>
+        </ion-row>
+    </ion-list>
 
   </div>
+
+
 
 
 
