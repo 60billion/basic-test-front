@@ -1,29 +1,64 @@
 <ion-header>
     <ion-navbar>
-        <ion-title></ion-title>
+        <ion-title> 
+            
+        </ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only large clear (click)="_uploadImage()">
+                <ion-icon ios="ios-send" md="md-send" color="pink"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
   
 <ion-content padding class="upload-content">
     <img [src]="base64Image">
-    <button ion-button color="pink" full (click)="openCamera()">Open Camera</button>
-    <button ion-button color="pink" full (click)="openGallery()">Open Gellary</button>
+    <button ion-button color="pink" full (click)="openCamera()">카메라 열기</button>
+    <button ion-button color="pink" full (click)="openGallery()">갤러리 열기</button>
+    <p></p>
     <ion-list>
         <ion-item>
-            <ion-label floating>Title</ion-label>
+            <ion-label>리뷰 카테고리</ion-label>
+            <ion-select [(ngModel)]="category" multiple="true">
+                <ion-option>패션/뷰티</ion-option>
+                <ion-option>식품/생활</ion-option>
+                <ion-option>유아동</ion-option>
+                <ion-option>디지털</ion-option>
+                <ion-option>리빙</ion-option>
+                <ion-option>스포츠/자동차</ion-option>
+                <ion-option>여행/레저</ion-option>
+                <ion-option>지역/쿠폰/서비스</ion-option>
+                <ion-option>공연/전시/체험</ion-option>
+                <ion-option>취미/반려</ion-option>
+                <ion-option>해외직구</ion-option>
+                <ion-option>기타</ion-option>
+            </ion-select>
+        </ion-item>
+ 
+        <ion-item>
+            <ion-label floating>상품명</ion-label>
+            <ion-input type="text"  [(ngModel)]="product" ></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>상품정보</ion-label>
+            <ion-input type="text"  [(ngModel)]="productInfo" ></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label floating>제목</ion-label>
             <ion-input type="text"  [(ngModel)]="title" ></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label floating>Review</ion-label>
-            <ion-textarea style="height:auto;" type="text"  [(ngModel)]="review"></ion-textarea>
+            <ion-label floating>리뷰</ion-label>
+            <ion-textarea #myInput id="myInput" rows="1" maxLength="5000" (keyup)="resize()" type="text"  [(ngModel)]="review"></ion-textarea>
         </ion-item>
     </ion-list>
     <p>{{checkdata}}</p>
 </ion-content>
 
-<ion-footer no-shadow>
+<!-- <ion-footer no-shadow>
 	<ion-toolbar position="bottom">
 		<button ion-button color="pink" full (click)="_uploadImage()">Upload Image</button>
 	</ion-toolbar>
-</ion-footer>
+</ion-footer> -->
   

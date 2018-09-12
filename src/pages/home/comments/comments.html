@@ -5,38 +5,65 @@
     </ion-navbar>
 </ion-header>
 <ion-content>
+    <p *ngIf="statusComments" style="text-align: center; margin-top:15px;">아직 댓글이 없습니다.</p>
     <ion-list no-lines>
+        <div *ngFor="let top of topComments">
         <ion-item>
             <ion-avatar item-start>
-                <img src="assets/imgs/logo.png">
+                <img src={{top.profileimg}}>
             </ion-avatar>
-            <h2>UserName</h2>
-            <ion-note item-end (click)="writeUnderComment()">Reply</ion-note>
-            <p>Hey...this is my comment.</p>
+            <h3>{{top.nickname}}</h3>
+
+            <div *ngIf="top.nickname == '이름없음'">
+                <p>{{top.comment}}</p>
+            </div> 
+
+            <button *ngIf="top.nickname != '이름없음' && !underComment" ion-button larage clear item-end color = "pink" (click)="deleteComment(top.underComment, top.username)" >삭제</button>
+            <button *ngIf="top.nickname != '이름없음'" ion-button large clear item-end style="color:pink; font-weight: bold;" (click)="writeUnderComment(top.underComment,top.nickname)">답글달기</button>
+            <p *ngIf="top.nickname != '이름없음'">{{top.comment}}</p>
+            
         </ion-item>
+        
         <ion-list class="innerList" no-lines>
-                <ion-item>
+                <ng-container *ngFor="let under of underComments">
+                <ion-item *ngIf="top.underComment == under.underComment">
                     <ion-avatar item-start>
-                        <img src="assets/imgs/logo.png">
+                        <img src={{under.profileimg}}>
                     </ion-avatar>
-                    <h2>UserName</h2>
-                    <ion-note item-end (click)="writeInUnderComment()">Reply</ion-note>
-                    <p>Hey...this is my comment.</p>
+                    <h3>{{under.nickname}}</h3>
+
+                    <div *ngIf="under.nickname == '이름없음'">
+                        <p>{{under.comment}}</p>
+                    </div> 
+
+                    <button *ngIf="under.nickname != '이름없음'" ion-button larage clear item-end color = "pink" (click)="deleteUnderComment(under.id, under.username)">삭제</button>
+                    <p *ngIf="under.nickname != '이름없음'">{{under.comment}}</p>
                 </ion-item>
+                
+            </ng-container>
         </ion-list>
+        </div>
     </ion-list>
+</ion-content>
 
     <ion-footer>
         <ion-toolbar>
-            <ion-item>
-                <ion-label floating>Comment</ion-label>
-                <ion-input #input type="text" [(ngModel)]="comment" ></ion-input>
+            <ion-item *ngIf="underComment==false">
+                <ion-label fixed color="pink">댓글달기</ion-label>               
+                <ion-input #input type="text" [(ngModel)]="comment" color="pink"></ion-input>            
                 <button ion-button icon-only large clear item-end (click)="writeComment()">
-                    <ion-icon ios="ios-send" md="md-send"></ion-icon>
+                    <ion-icon ios="ios-send" md="md-send" color="pink"></ion-icon>
+                </button>                
+            </ion-item>
+            <ion-item *ngIf="underComment">
+                <ion-label fixed color="pink">답글달기</ion-label>
+                <ion-input #input1 type="text" [(ngModel)]="sunderComment" color="pink" placeholder = "{{towho}}님 에게 답글 달기 "></ion-input>
+                <button ion-button icon-only large clear item-end (click)="sendUnderComment()">
+                    <ion-icon ios="ios-send" md="md-send" color="pink"></ion-icon>
                 </button>
             </ion-item>
         </ion-toolbar>
     </ion-footer>
+
     
 
-</ion-content>

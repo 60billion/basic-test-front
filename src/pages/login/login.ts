@@ -71,5 +71,26 @@ export class Login {
     this.navCtrl.push(Signin)
   }
 
+  ionViewDidEnter() {
+    this.secureStorage.create("tokenStorage")
+    .then((storage:SecureStorageObject)=>{
+      storage.get('token').then(token=>{
+        
+        let data={
+          tokens:token
+        }
+        this.http.post(this.url.url+'/verifyLogin',data).pipe(map(res=>res.json())).subscribe(response => {
+            if(response.reviews){
+              this.navCtrl.push(TabsPage);
+
+            }
+            // else if(response.login){
+            //   this.navCtrl.push(Login);
+            // }
+        })
+
+      })
+    })  
+  }
 
 }

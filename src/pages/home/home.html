@@ -14,34 +14,31 @@
     </ion-refresher>
     
 
-    <ion-card class="mainProCard" *ngFor="let item of reviews">
+    <ion-card class="mainProCard" *ngFor="let item of items; let i= index">
         
         <ion-item class="mainProfile">
           <ion-avatar item-start>
             <!-- 이미지 적용위치 -->
-            <img src={{item.location}}> 
+            <img src={{item.profileimg}}> 
           </ion-avatar>
-          <h5>지환이맘</h5>
+          <h5>{{item.nickname}}</h5>
         </ion-item>
           <!-- 이미지 적용위치 -->
           <!-- <img class="mainImg" src="assets/img/rel1.jpg" (click)="intoSalePage()">       -->
-          <img class="mainImg" src={{item.location}}>   
+          <img class="mainImg" src={{item.location}} (click) = "intoReview(item.id)">   
 
         
         <ion-row>
           <ion-col>
-
-            <button  ion-button color="pink" clear small icon-start (click)="wantitClick(item.id,item.count)">              
+            <button  ion-button color="pink" clear small icon-start (click)="wantitClick(item.id,item.count,i)">              
                 <ion-icon name='thumbs-up'></ion-icon>
                 {{item.count}} want!              
             </button>
-
-
           </ion-col>
           <ion-col>
-            <button  ion-button color="pink" clear small icon-start (click)="showComments()">
+            <button  ion-button color="pink" clear small icon-start (click)="showComments(item.id)">
               <ion-icon name='text'></ion-icon>
-              25 comments
+              {{item.cocount}} comments
             </button>
           </ion-col >
           <ion-col align-self-center text-center>
@@ -74,16 +71,15 @@
         </ion-list>
         
       </ion-card>
-
-
-    <!--리프래시 기능(하단) 나오지 않은 과거내용 하단 추가-->
-    <!-- <ion-refresher (ionRefresh)="doRefresh($event)" (ionPull)="doPulling($event)">
-      <ion-refresher-content
+      <!-- <ion-list>
+        <ion-item *ngFor="let i of items">{{i}}</ion-item>
+      </ion-list> -->
+      <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content
         pullingText="Pull to refresh..."
         refreshingText="Refreshing...">
-      </ion-refresher-content>
-    </ion-refresher> -->
-
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
 
   <ion-fab right bottom>
     <button ion-fab color="light" (click)="goToUploadPage()"><ion-icon name="add"></ion-icon></button>

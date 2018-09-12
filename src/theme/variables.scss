@@ -39,7 +39,8 @@ $colors: (
   danger:     #f53d3d,
   light:      #f4f4f4,
   pink:       #fd8c8e,
-  dark:       #222
+  dark:       #222,
+  white:      #ffffff,
 );
 
 
@@ -70,8 +71,10 @@ $colors: (
 // then be future customized. This import comes last
 // so that the above variables are used and Ionic's
 // default are overridden.
-
+$text-input-highlight-color-valid: #fd8c8e;
+$text-input-md-highlight-color:#fd8c8e;
 @import "ionic.theme.default";
+
 
 
 // Ionicons

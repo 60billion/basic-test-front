@@ -1,0 +1,36 @@
+page-hot{
+    .relative{
+        margin:-10px;
+    }
+    .relative h2{
+        text-align: center; 
+        color:rgb(255, 129, 150); 
+        font-weight: bold;
+    }
+    .card-background-pages {
+
+        ion-card {
+          position: relative;
+          text-align: center;
+        }
+      
+        .card-titles {
+          position: absolute;
+          top: 36%;
+          font-size: 1.3em;
+          width: 100%;
+          font-weight: bold;
+          color: #fff;
+          text-shadow:0px 0px 15px rgba(0, 0, 0, 0.7);
+        }
+        .card-titless {
+            position: absolute;
+            top: 56%;
+            font-size: 2em;
+            width: 100%;
+            font-weight: bold;
+            color: #fff;
+            text-shadow:0px 0px 15px rgba(0, 0, 0, 0.7);
+          }
+    }
+}

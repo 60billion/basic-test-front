@@ -36,6 +36,8 @@ export class Signin {
             realname=realname+fakeUsername[i]
           }
         }
+        var nickname = this.nicknameMaker(realname);
+
 
       if(this.password === this.passwordCheck && 
         this.password.length>5 && 
@@ -45,7 +47,8 @@ export class Signin {
 
             let personalInfo = {
                 username:realname,
-                password:this.password
+                password:this.password,
+                nickname:nickname
             }
 
             this.http.post(this.url.url+"/register",personalInfo).pipe(
@@ -96,6 +99,19 @@ export class Signin {
         return true;
     }else{
         return false
+    }
+  }
+
+  //userNickName만드는함수
+  nicknameMaker(email){
+    var divided = email.split("");
+    var nickname = "";
+    for(var i in divided){
+        
+        if(divided[i] == "@"){
+            return nickname;
+        }
+        nickname=nickname+divided[i];        
     }
   }
 

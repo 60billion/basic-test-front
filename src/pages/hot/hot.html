@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="card-background-pages">  
+    <ion-item-group>
+      <ion-item-divider color="pink" style="text-align: center;  font-size:150%;  font-weight: bold;"><ion-icon name="bonfire"></ion-icon> 인기포스팅 </ion-item-divider>
+    </ion-item-group>
+    <ion-card class="top" *ngFor="let fs of first">
+      <img (click) = "intoReview(fs.id)" src={{fs.location}}/>
+      <div class="card-titless">{{fs.count}} WAN!T</div>      
+    </ion-card>
+    <ion-row >
+        <ion-col class="relative" width-50>
+          <ion-card *ngFor="let sec of second">
+            <img (click) = "intoReview(sec.id)" src={{sec.location}}/>            
+            <div class="card-titles">{{sec.count}} WAN!T</div>          
+          </ion-card>
+        </ion-col>
+        <ion-col class="relative" width-50>
+          <ion-card *ngFor="let th of third">
+            <img (click) = "intoReview(th.id)" src={{th.location}}/>
+            <div class="card-titles">{{th.count}} WAN!T</div>             
+          </ion-card>
+        </ion-col>
+    </ion-row>     
+  
+</ion-content>

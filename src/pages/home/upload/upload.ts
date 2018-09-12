@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild, ElementRef } from '@angular/core';
 import { NavController, LoadingController } from 'ionic-angular';
 
 import { Http } from '@angular/http';
@@ -12,6 +12,7 @@ import { Url } from '../../url/url';
 
 import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage';
 import { Login } from '../../login/login';
+import { TabsPage } from '../../tabs/tabs';
 
 
 
@@ -21,11 +22,17 @@ import { Login } from '../../login/login';
 })
 export class Upload {
 
+  @ViewChild('myInput') myInput: ElementRef;
+
   base64Image="https://www.joomlatools.com/images/developer/ui/placeholder-16-9.png.pagespeed.ce.gT4LjHxoYL.png"
   title:string;
   review:string;
   checkdata;
   token;
+  toppings;
+  product:string;
+  productInfo:string;
+  category:string;
 
   constructor(public navCtrl: NavController,
               private camera: Camera,
@@ -38,6 +45,13 @@ export class Upload {
               private secureStorage: SecureStorage) {
 
   }
+  //html에 textarea부분 자동으로 커지게 설정하는 내용. 자세하내용은 모르 그냥 퍼옴..
+  resize() {
+    var element = this.myInput['_elementRef'].nativeElement.getElementsByClassName("text-input")[0];
+    var scrollHeight = element.scrollHeight;
+    element.style.height = scrollHeight + 'px';
+    this.myInput['_elementRef'].nativeElement.style.height = (scrollHeight + 16) + 'px';
+}
   //카메라켜서 이미지가지고 오기
   openCamera(){
     const options:CameraOptions={
@@ -96,7 +110,7 @@ export class Upload {
             fileName: fileName,
             chunkedMode: false,
             mimeType:'multipart/form-data',
-            params:{"title":this.title, "review":this.review, "tokens":token}//데이터 업로드(RDS)
+            params:{"title":this.title, "review":this.review, "tokens":token, "category":this.category, "productName":this.product, "productInfo":this.productInfo}//데이터 업로드(RDS)
         }
 
         fileTransfer.upload(this.base64Image ,this.url.url+'/getReview', options)
@@ -108,7 +122,7 @@ export class Upload {
           //다만 토큰에 따른 미들웨어 때문에 객체로 응답하고있다. 추후 토큰을 바디값이 아닌 헤더로 바꿀 예정이다.
 
           if(data.response == "{\"session\":\"session\"}"){
-            this.navCtrl.push(HomePage);
+            this.navCtrl.push(TabsPage);
           }else if(data.response == "{\"login\":\"login\"}"){
             this.navCtrl.push(Login)
           }

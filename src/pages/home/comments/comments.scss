@@ -15,5 +15,18 @@ comments-page{
         margin: 0px !important;
        }
     }
+    ion-footer{
+        ion-label{
+            font-size: 120%;
+            font-weight: bold;
+            margin:0px !important;
+        }
+        button{
+            margin:0px !important;
+            ion-icon{
+                margin:0px !important;
+            }
+        }
+    }
     
 }

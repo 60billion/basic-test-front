@@ -1,0 +1,68 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title> 
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content class="card-background-page" *ngFor="let item of rows">
+    <ion-card style="margin-top:60px;">
+        <ion-item>
+                <ion-avatar item-start>
+                <img src={{item.profileimg}}>
+                </ion-avatar>
+                <h2>{{item.nickname}}</h2>
+                <p>11hr ago</p>
+        </ion-item>
+        <img src={{item.location}}/>
+            
+        
+        <ion-card-content>
+            <ion-card-title>
+            {{item.title}}
+            </ion-card-title>
+            <p>
+            {{item.review}}
+            </p>
+        </ion-card-content>
+
+        <ion-row>
+            <ion-col >
+                <button no-margin ion-button color="pink" clear small icon-start (click)="wantitClick(item.id,item.count)">
+                <ion-icon name='thumbs-up'></ion-icon>
+                {{item.count}} want!
+                </button>
+            </ion-col >
+            <ion-col >
+                <button no-margin ion-button color="pink" clear small icon-start (click)="showComments(item.id)">
+                <ion-icon name='text'></ion-icon>
+                {{item.cocount}} comments
+                </button>
+            </ion-col >
+            <ion-col align-self-center text-center>
+                <ion-note no-margin >
+                11h ago
+                </ion-note>
+                </ion-col>
+        </ion-row>
+    </ion-card>
+    <ion-item-group>
+        <ion-item>
+            <h2>Information</h2>
+            <h3>Product Name: {{item.productName}}</h3>
+            <p>Product Info: {{item.productInfo}}</p>
+        </ion-item>    
+        <ion-item>
+            <h2>Contents</h2>
+            <p>
+            {{item.review}}
+            </p>
+        </ion-item>
+        <ion-item>
+            <h3>Count Of Want!</h3>
+            <progress-bar progress={{item.count}} [color-degraded]="{'0': '#fbd6e0',  '50': '#f9c3d3', '80': '#fd8c8e'}"></progress-bar>  
+        </ion-item>
+        <ion-item>
+            relative experiences
+        </ion-item>
+    </ion-item-group>
+</ion-content>

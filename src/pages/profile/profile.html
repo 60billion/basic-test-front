@@ -6,7 +6,7 @@
     </ion-navbar>
     <ion-toolbar no-border-top>
       <ion-segment color="pink" [(ngModel)]="profile">
-        <ion-segment-button value="myPage">
+        <ion-segment-button value="myPage" (click)="showProfileMain()">
             <ion-icon name="clipboard"></ion-icon>
         </ion-segment-button>
         <ion-segment-button value="Wan!t" (click)="showLikes()">
@@ -23,7 +23,7 @@
   </ion-header>
   
   <ion-content>
-  <!-- <button ion-button full (click)="logout()">logout</button> -->
+  <button ion-button full color="pink" (click)="logout()">logout</button>
   <!-- <button ion-button full (click)="_button()">test</button> -->
   
   
@@ -31,43 +31,45 @@
     <ion-list *ngSwitchCase="'myPage'">
         <ion-card id="content">
             <ion-avatar id="profile-info">
-              <img id="profile-image" src="https://www.gstatic.com/webp/gallery3/2.png">
+              <img id="profile-image" src={{profileimg}}>
             </ion-avatar>
-              <p style="text-align: center; font-weight: bold; ">Jihwan momy </p>
+              <p style="text-align: center; font-weight: bold; ">{{nickname}} </p>
               <p style="text-align: center; ">Hi, my name is Joe Doe and I have the most boring job in the most boring company <button ion-button small clear item-end color="pink">edit</button></p>
             <ion-row >
               <ion-col width-50>
                 <button ion-button full color="pink" small icon-start>                  
-                  fallower 2,235 
+                  follower 2,235 
                 </button>
               </ion-col>
               <ion-col width-50>
                 <button ion-button full color="pink" small icon-start>              
-                  fallowing 1,859
+                  following 1,859
                 </button>
               </ion-col>
             </ion-row>
 
             
         </ion-card>
-
+        <!-- <p *ngIf="noReviews" style="text-align: center; margin-top:15px;">리뷰가 없습니다.</p> -->
         <ion-row class="card-background-pages">
           <!-- row에 ngfor를 돌려야할거라 생각했는데, ion-col에 col-6 값을 넣고하니깐 된다... (row에서 하니 문제가있었다.)
             다만 col or row or card 중에 페딩 마진 부분이 문제가 있었는데(카드끼리 너무 떨어져있는 현상) 
             css에 ion-card부분처럼 작성하니 작동하였다. width:100% !important; margin-left: 0 !important;  
             margin-right: 0 !important; img{ width:100%; } -->
-            <ion-col class="relative" width-50   > 
+            <ion-col class="relative" width-50> 
                 <ion-card *ngFor="let odd of profileOddList;">
-                    <img src={{odd.location}}/>                    
-                    <h2>{{odd.title}}</h2>
-                    <progress-bar progress={{odd.count}} [color-degraded]="{'0': '#fbd6e0',  '1': '#f9c3d3', '3': '#fd8c8e'}"></progress-bar>  
+                    <img (click) = "intoReview(odd.id)" src={{odd.location}}/> 
+                    <div class="card-titles">{{odd.count}} wan!t</div>                      
+                    <!-- <h2>{{odd.title}}</h2>
+                    <progress-bar progress={{odd.count}} [color-degraded]="{'0': '#fbd6e0',  '1': '#f9c3d3', '3': '#fd8c8e'}"></progress-bar>   -->
                 </ion-card>        
             </ion-col>
-            <ion-col class="relative" width-50   > 
+            <ion-col class="relative" width-50> 
               <ion-card *ngFor="let even of profileEvenList;">
-                  <img src={{even.location}}/>                    
-                  <h2>{{even.title}}</h2>
-                  <progress-bar progress={{even.count}} [color-degraded]="{'0': '#fbd6e0',  '1': '#f9c3d3', '3': '#fd8c8e'}"></progress-bar>  
+                  <img (click) = "intoReview(even.id)" src={{even.location}}/>  
+                  <div class="card-titles">{{even.count}} wan!t</div>                  
+                  <!-- <h2>{{even.title}}</h2>
+                  <progress-bar progress={{even.count}} [color-degraded]="{'0': '#fbd6e0',  '1': '#f9c3d3', '3': '#fd8c8e'}"></progress-bar>   -->
               </ion-card>        
           </ion-col>
         </ion-row>
@@ -75,19 +77,20 @@
 
     <ion-list *ngSwitchCase="'Wan!t'">
         <ion-row class="card-background-pages" >
-          <ion-col class="relative" width-50 >
+          <ion-col class="relative" width-50>
               <ion-card *ngFor="let odd of likeOddList;">
-                  <img src={{odd.location}}/>                    
-                  <h2>{{odd.title}}</h2>
-                  <progress-bar progress={{odd.count}} [color-degraded]="{'0': '#fbd6e0',  '1': '#f9c3d3', '3': '#fd8c8e'}"></progress-bar>  
+                  <img (click) = "intoReview(odd.id)" src={{odd.location}}/>   
+                  <div class="card-titles">{{odd.count}} wan!t</div>                 
+                  <!-- <h2>{{odd.title}}</h2>
+                  <progress-bar progress={{odd.count}} [color-degraded]="{'0': '#fbd6e0',  '1': '#f9c3d3', '3': '#fd8c8e'}"></progress-bar>   -->
               </ion-card>            
           </ion-col>
-          <ion-col class="relative" width-50 >
+          <ion-col class="relative" width-50>
               <ion-card *ngFor="let even of likeEvenList;">
-                  <img src={{even.location}}/>
-                  <div class="card-titles">OnSale</div>
-                  <h2>{{even.title}}</h2>
-                  <progress-bar progress={{even.count}} [color-degraded]="{'0': '#fbd6e0',  '1': '#f9c3d3', '3': '#fd8c8e'}"></progress-bar>  
+                  <img (click) = "intoReview(even.id)" src={{even.location}}/>
+                  <div class="card-titles">{{even.count}} wan!t</div>
+                  <!-- <h2>{{even.title}}</h2>
+                  <progress-bar progress={{even.count}} [color-degraded]="{'0': '#fbd6e0',  '1': '#f9c3d3', '3': '#fd8c8e'}"></progress-bar>   -->
               </ion-card>
           </ion-col>
         </ion-row>

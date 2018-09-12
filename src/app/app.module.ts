@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
-import { AboutPage } from '../pages/about/about';
+import { Hot } from '../pages/hot/hot';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
         import { Upload } from '../pages/home/upload/upload';
@@ -25,22 +25,22 @@ import { SecureStorage } from '@ionic-native/secure-storage';
 
 import { Url } from '../pages/url/url';
 import { SetTokenProvider } from '../providers/set-token/set-token';
-import { Testt } from '../pages/about/testt/testt';
 import { Comments } from '../pages/home/comments/comments';
 
 import { Keyboard } from '@ionic-native/keyboard';
+import { Into_review } from '../pages/home/into_review/into_review';
 
 
 
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
-      Testt,
+    Hot,
     ContactPage,
     HomePage,
       Upload,
       Comments,
+      Into_review,
     Alarm,
     Profile,
     TabsPage,
@@ -56,12 +56,12 @@ import { Keyboard } from '@ionic-native/keyboard';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
-      Testt,
+    Hot,
     ContactPage,
     HomePage,
       Upload,
       Comments,
+      Into_review,
     Alarm,
     Profile,
     TabsPage,
